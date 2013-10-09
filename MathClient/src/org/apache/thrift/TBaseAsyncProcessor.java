@@ -21,14 +21,14 @@ package org.apache.thrift;
 import org.apache.thrift.protocol.*;
 
 import org.apache.thrift.server.AbstractNonblockingServer.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+///import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.Map;
 
 public class TBaseAsyncProcessor<I> implements TProcessor {
-    protected final Logger LOGGER = LoggerFactory.getLogger(getClass().getName());
+  //  protected final Logger LOGGER = LoggerFactory.getLogger(getClass().getName());
 
     final I iface;
     final Map<String,AsyncProcessFunction<I, ? extends TBase,?>> processMap;

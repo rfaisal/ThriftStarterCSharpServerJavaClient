@@ -19,8 +19,8 @@
 
 package org.apache.thrift.transport;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -35,7 +35,7 @@ import java.net.SocketException;
  */
 public class TSocket extends TIOStreamTransport {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(TSocket.class.getName());
+  //private static final Logger LOGGER = LoggerFactory.getLogger(TSocket.class.getName());
 
   /**
    * Wrapped Socket object
@@ -69,7 +69,7 @@ public class TSocket extends TIOStreamTransport {
       socket_.setSoLinger(false, 0);
       socket_.setTcpNoDelay(true);
     } catch (SocketException sx) {
-      LOGGER.warn("Could not configure socket.", sx);
+  //    LOGGER.warn("Could not configure socket.", sx);
     }
 
     if (isOpen()) {
@@ -119,7 +119,7 @@ public class TSocket extends TIOStreamTransport {
       socket_.setTcpNoDelay(true);
       socket_.setSoTimeout(timeout_);
     } catch (SocketException sx) {
-      LOGGER.error("Could not configure socket.", sx);
+ //     LOGGER.error("Could not configure socket.", sx);
     }
   }
 
@@ -133,7 +133,7 @@ public class TSocket extends TIOStreamTransport {
     try {
       socket_.setSoTimeout(timeout);
     } catch (SocketException sx) {
-      LOGGER.warn("Could not set socket timeout.", sx);
+ //     LOGGER.warn("Could not set socket timeout.", sx);
     }
   }
 
@@ -198,7 +198,7 @@ public class TSocket extends TIOStreamTransport {
       try {
         socket_.close();
       } catch (IOException iox) {
-        LOGGER.warn("Could not close socket.", iox);
+    //    LOGGER.warn("Could not close socket.", iox);
       }
       socket_ = null;
     }

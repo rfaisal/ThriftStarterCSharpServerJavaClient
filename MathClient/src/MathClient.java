@@ -10,6 +10,10 @@ public class MathClient {
 
 		 TProtocol protocol = new  TBinaryProtocol(transport);
 		 MathService.Client client = new MathService.Client(protocol);
-		 client.add(10, 20);
+		 System.out.println(client.add(10, 20));
+		 System.out.println(client.sub(10, 20));
+		 System.out.println(client.mul(10, 20));
+		 System.out.println(client.div(10, 20));
+		 System.out.println(client.mod(10, 20));
 	 }
 }

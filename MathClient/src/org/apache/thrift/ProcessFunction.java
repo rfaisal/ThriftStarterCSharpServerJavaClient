@@ -7,13 +7,13 @@ import org.apache.thrift.protocol.TMessage;
 import org.apache.thrift.protocol.TMessageType;
 import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.protocol.TProtocolException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 public abstract class ProcessFunction<I, T extends TBase> {
   private final String methodName;
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(ProcessFunction.class.getName());
+ // private static final Logger LOGGER = LoggerFactory.getLogger(ProcessFunction.class.getName());
 
   public ProcessFunction(String methodName) {
     this.methodName = methodName;
@@ -38,7 +38,7 @@ public abstract class ProcessFunction<I, T extends TBase> {
     try {
       result = getResult(iface, args);
     } catch(TException tex) {
-      LOGGER.error("Internal error processing " + getMethodName(), tex);
+    //  LOGGER.error("Internal error processing " + getMethodName(), tex);
       TApplicationException x = new TApplicationException(TApplicationException.INTERNAL_ERROR, 
         "Internal error processing " + getMethodName());
       oprot.writeMessageBegin(new TMessage(getMethodName(), TMessageType.EXCEPTION, seqid));

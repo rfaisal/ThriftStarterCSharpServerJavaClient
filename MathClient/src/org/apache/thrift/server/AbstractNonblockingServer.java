@@ -39,15 +39,15 @@ import org.apache.thrift.transport.TNonblockingServerTransport;
 import org.apache.thrift.transport.TNonblockingTransport;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * Provides common methods and classes used by nonblocking TServer
  * implementations.
  */
 public abstract class AbstractNonblockingServer extends TServer {
-  protected final Logger LOGGER = LoggerFactory.getLogger(getClass().getName());
+ // protected final Logger LOGGER = LoggerFactory.getLogger(getClass().getName());
 
   public static abstract class AbstractNonblockingServerArgs<T extends AbstractNonblockingServerArgs<T>> extends AbstractServerArgs<T> {
     public long maxReadBufferBytes = Long.MAX_VALUE;
@@ -124,7 +124,7 @@ public abstract class AbstractNonblockingServer extends TServer {
       serverTransport_.listen();
       return true;
     } catch (TTransportException ttx) {
-      LOGGER.error("Failed to start listening on server socket!", ttx);
+     // LOGGER.error("Failed to start listening on server socket!", ttx);
       return false;
     }
   }
@@ -267,7 +267,7 @@ public abstract class AbstractNonblockingServer extends TServer {
    * read and write bits on the selection key for its client.
    */
    public class FrameBuffer {
-    private final Logger LOGGER = LoggerFactory.getLogger(getClass().getName());
+//    private final Logger LOGGER = LoggerFactory.getLogger(getClass().getName());
 
     // the actual transport hooked up to the client.
     protected final TNonblockingTransport trans_;
@@ -345,16 +345,16 @@ public abstract class AbstractNonblockingServer extends TServer {
           // pull out the frame size as an integer.
           int frameSize = buffer_.getInt(0);
           if (frameSize <= 0) {
-            LOGGER.error("Read an invalid frame size of " + frameSize
-                + ". Are you using TFramedTransport on the client side?");
+     //       LOGGER.error("Read an invalid frame size of " + frameSize
+    //            + ". Are you using TFramedTransport on the client side?");
             return false;
           }
 
           // if this frame will always be too large for this server, log the
           // error and close the connection.
           if (frameSize > MAX_READ_BUFFER_BYTES) {
-            LOGGER.error("Read a frame size of " + frameSize
-                + ", which is bigger than the maximum allowable buffer size for ALL connections.");
+      //      LOGGER.error("Read a frame size of " + frameSize
+         //       + ", which is bigger than the maximum allowable buffer size for ALL connections.");
             return false;
           }
 
@@ -401,7 +401,7 @@ public abstract class AbstractNonblockingServer extends TServer {
       }
 
       // if we fall through to this point, then the state must be invalid.
-      LOGGER.error("Read was called but state is invalid (" + state_ + ")");
+    //  LOGGER.error("Read was called but state is invalid (" + state_ + ")");
       return false;
     }
 
@@ -415,7 +415,7 @@ public abstract class AbstractNonblockingServer extends TServer {
             return false;
           }
         } catch (IOException e) {
-          LOGGER.warn("Got an IOException during write!", e);
+    //      LOGGER.warn("Got an IOException during write!", e);
           return false;
         }
 
@@ -426,7 +426,7 @@ public abstract class AbstractNonblockingServer extends TServer {
         return true;
       }
 
-      LOGGER.error("Write was called, but state is invalid (" + state_ + ")");
+  //    LOGGER.error("Write was called, but state is invalid (" + state_ + ")");
       return false;
     }
 
@@ -445,7 +445,7 @@ public abstract class AbstractNonblockingServer extends TServer {
         close();
         selectionKey_.cancel();
       } else {
-        LOGGER.error("changeSelectInterest was called, but state is invalid (" + state_ + ")");
+   //     LOGGER.error("changeSelectInterest was called, but state is invalid (" + state_ + ")");
       }
     }
 
@@ -517,9 +517,9 @@ public abstract class AbstractNonblockingServer extends TServer {
         responseReady();
         return;
       } catch (TException te) {
-        LOGGER.warn("Exception while invoking!", te);
+//        LOGGER.warn("Exception while invoking!", te);
       } catch (Throwable t) {
-        LOGGER.error("Unexpected throwable while invoking!", t);
+  //      LOGGER.error("Unexpected throwable while invoking!", t);
       }
       // This will only be reached when there is a throwable.
       state_ = FrameBufferState.AWAITING_CLOSE;
@@ -539,7 +539,7 @@ public abstract class AbstractNonblockingServer extends TServer {
         }
         return true;
       } catch (IOException e) {
-        LOGGER.warn("Got an IOException in internalRead!", e);
+    //    LOGGER.warn("Got an IOException in internalRead!", e);
         return false;
       }
     }
@@ -598,9 +598,9 @@ public abstract class AbstractNonblockingServer extends TServer {
         ((TBaseAsyncProcessor)processorFactory_.getProcessor(inTrans_)).process(this);
         return;
       } catch (TException te) {
-        LOGGER.warn("Exception while invoking!", te);
+    //    LOGGER.warn("Exception while invoking!", te);
       } catch (Throwable t) {
-        LOGGER.error("Unexpected throwable while invoking!", t);
+   //     LOGGER.error("Unexpected throwable while invoking!", t);
       }
       // This will only be reached when there is a throwable.
       state_ = FrameBufferState.AWAITING_CLOSE;

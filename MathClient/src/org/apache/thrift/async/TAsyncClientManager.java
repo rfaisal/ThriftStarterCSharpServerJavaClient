@@ -30,14 +30,14 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeoutException;
 
 import org.apache.thrift.TException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * Contains selector thread which transitions method call objects
  */
 public class TAsyncClientManager {
-  private static final Logger LOGGER = LoggerFactory.getLogger(TAsyncClientManager.class.getName());
+ // private static final Logger LOGGER = LoggerFactory.getLogger(TAsyncClientManager.class.getName());
 
   private final SelectThread selectThread;
   private final ConcurrentLinkedQueue<TAsyncMethodCall> pendingCalls = new ConcurrentLinkedQueue<TAsyncMethodCall>();
@@ -107,13 +107,13 @@ public class TAsyncClientManager {
               }
             }
           } catch (IOException e) {
-            LOGGER.error("Caught IOException in TAsyncClientManager!", e);
+      //      LOGGER.error("Caught IOException in TAsyncClientManager!", e);
           }
           transitionMethods();
           timeoutMethods();
           startPendingMethods();
         } catch (Exception exception) {
-          LOGGER.error("Ignoring uncaught exception in SelectThread", exception);
+       //   LOGGER.error("Ignoring uncaught exception in SelectThread", exception);
         }
       }
     }
@@ -141,7 +141,7 @@ public class TAsyncClientManager {
           }
         }
       } catch (ClosedSelectorException e) {
-        LOGGER.error("Caught ClosedSelectorException in TAsyncClientManager!", e);
+      //  LOGGER.error("Caught ClosedSelectorException in TAsyncClientManager!", e);
       }
     }
 
@@ -174,7 +174,7 @@ public class TAsyncClientManager {
             timeoutWatchSet.add(methodCall);
           }
         } catch (Exception exception) {
-          LOGGER.warn("Caught exception in TAsyncClientManager!", exception);
+        //  LOGGER.warn("Caught exception in TAsyncClientManager!", exception);
           methodCall.onError(exception);
         }
       }
