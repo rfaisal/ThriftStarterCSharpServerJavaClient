@@ -4,3 +4,6 @@
 *.jar
 *.war
 *.ear
+
+MathServer/MathServer/bin/*
+MathServer/MathServer/obj/*
