@@ -25,14 +25,14 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-
+/*
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+*/
 import org.apache.thrift.TException;
 import org.apache.thrift.TProcessor;
 import org.apache.thrift.protocol.TProtocol;
@@ -48,7 +48,7 @@ import org.apache.thrift.transport.TTransport;
  * two TProtocolFactory. Those methods are guaranteed to be called exactly once,
  * and that {@link ServletContext} is available.
  */
-public abstract class TExtensibleServlet extends HttpServlet {
+public abstract class TExtensibleServlet /*extends HttpServlet*/ {
   private static final long serialVersionUID = 1L;
 
   private TProcessor processor;
@@ -82,7 +82,7 @@ public abstract class TExtensibleServlet extends HttpServlet {
    * @return
    */
   protected abstract TProtocolFactory getOutProtocolFactory();
-
+/*
   @Override
   public final void init(ServletConfig config) throws ServletException {
     super.init(config); //no-args init() happens here
@@ -101,12 +101,12 @@ public abstract class TExtensibleServlet extends HttpServlet {
       throw new ServletException("outFactory must be set");
     }
   }
-
+*/
   /**
    * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
    *      response)
    */
-  @Override
+ /* @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     TTransport inTransport = null;
@@ -136,17 +136,17 @@ public abstract class TExtensibleServlet extends HttpServlet {
     } catch (TException te) {
       throw new ServletException(te);
     }
-  }
+  }*/
 
   /**
    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
    *      response)
    */
-  @Override
+/*  @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     doPost(req, resp);
-  }
+  }*/
 
   public void addCustomHeader(final String key, final String value) {
     this.customHeaders.add(new Map.Entry<String, String>() {

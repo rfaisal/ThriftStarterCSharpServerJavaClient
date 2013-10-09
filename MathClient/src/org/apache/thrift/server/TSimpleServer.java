@@ -24,8 +24,8 @@ import org.apache.thrift.TProcessor;
 import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * Simple singlethreaded server for testing.
@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TSimpleServer extends TServer {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(TSimpleServer.class.getName());
+  //private static final Logger LOGGER = LoggerFactory.getLogger(TSimpleServer.class.getName());
 
   // Please see THRIFT-1795 for the usage of this flag
   private volatile boolean stopped_ = false;
@@ -46,7 +46,7 @@ public class TSimpleServer extends TServer {
     try {
       serverTransport_.listen();
     } catch (TTransportException ttx) {
-      LOGGER.error("Error occurred during listening.", ttx);
+   //   LOGGER.error("Error occurred during listening.", ttx);
       return;
     }
 
@@ -89,11 +89,11 @@ public class TSimpleServer extends TServer {
         // Client died, just move on
       } catch (TException tx) {
         if (!stopped_) {
-          LOGGER.error("Thrift error occurred during processing of message.", tx);
+      //    LOGGER.error("Thrift error occurred during processing of message.", tx);
         }
       } catch (Exception x) {
         if (!stopped_) {
-          LOGGER.error("Error occurred during processing of message.", x);
+  //        LOGGER.error("Error occurred during processing of message.", x);
         }
       }
 

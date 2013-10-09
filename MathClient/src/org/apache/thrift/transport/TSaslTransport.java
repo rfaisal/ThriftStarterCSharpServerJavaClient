@@ -30,8 +30,8 @@ import javax.security.sasl.SaslServer;
 
 import org.apache.thrift.EncodingUtils;
 import org.apache.thrift.TByteArrayOutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * A superclass for SASL client/server thrift transports. A subclass need only
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 abstract class TSaslTransport extends TTransport {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(TSaslTransport.class);
+  //private static final Logger LOGGER = LoggerFactory.getLogger(TSaslTransport.class);
 
   protected static final int DEFAULT_MAX_LENGTH = 0x7FFFFFFF;
 
@@ -158,9 +158,9 @@ abstract class TSaslTransport extends TTransport {
     messageHeader[0] = status.getValue();
     EncodingUtils.encodeBigEndian(payload.length, messageHeader, STATUS_BYTES);
 
-    if (LOGGER.isDebugEnabled())
-      LOGGER.debug(getRole() + ": Writing message with status {} and payload length {}",
-                   status, payload.length);
+    //if (LOGGER.isDebugEnabled())
+    //  LOGGER.debug(getRole() + ": Writing message with status {} and payload length {}",
+    //               status, payload.length);
     underlyingTransport.write(messageHeader);
     underlyingTransport.write(payload);
     underlyingTransport.flush();
@@ -193,9 +193,9 @@ abstract class TSaslTransport extends TTransport {
       }
     }
 
-    if (LOGGER.isDebugEnabled())
-      LOGGER.debug(getRole() + ": Received message with status {} and payload length {}",
-                   status, payload.length);
+   // if (LOGGER.isDebugEnabled())
+  //    LOGGER.debug(getRole() + ": Received message with status {} and payload length {}",
+  //                 status, payload.length);
     return new SaslResponse(status, payload);
   }
 
@@ -215,7 +215,7 @@ abstract class TSaslTransport extends TTransport {
     try {
       sendSaslMessage(status, message.getBytes());
     } catch (Exception e) {
-      LOGGER.warn("Could not send failure response", e);
+ //     LOGGER.warn("Could not send failure response", e);
       message += "\nAlso, could not send response: " + e.toString();
     }
     throw new TTransportException(message);
@@ -240,7 +240,7 @@ abstract class TSaslTransport extends TTransport {
    */
   @Override
   public void open() throws TTransportException {
-    LOGGER.debug("opening transport {}", this);
+ //   LOGGER.debug("opening transport {}", this);
     if (sasl != null && sasl.isComplete())
       throw new TTransportException("SASL transport already open");
 
@@ -251,7 +251,7 @@ abstract class TSaslTransport extends TTransport {
       // Negotiate a SASL mechanism. The client also sends its
       // initial response, or an empty one.
       handleSaslStartMessage();
-      LOGGER.debug("{}: Start message handled", getRole());
+   //   LOGGER.debug("{}: Start message handled", getRole());
 
       SaslResponse message = null;
       while (!sasl.isComplete()) {
@@ -267,14 +267,14 @@ abstract class TSaslTransport extends TTransport {
         // send back any further response.
         if (message.status == NegotiationStatus.COMPLETE &&
             getRole() == SaslRole.CLIENT) {
-          LOGGER.debug("{}: All done!", getRole());
+      //    LOGGER.debug("{}: All done!", getRole());
           break;
         }
 
         sendSaslMessage(sasl.isComplete() ? NegotiationStatus.COMPLETE : NegotiationStatus.OK,
                         challenge);
       }
-      LOGGER.debug("{}: Main negotiation loop complete", getRole());
+     // LOGGER.debug("{}: Main negotiation loop complete", getRole());
 
       assert sasl.isComplete();
 
@@ -284,7 +284,7 @@ abstract class TSaslTransport extends TTransport {
       // and are immediately complete.
       if (getRole() == SaslRole.CLIENT &&
           (message == null || message.status == NegotiationStatus.OK)) {
-        LOGGER.debug("{}: SASL Client receiving last message", getRole());
+    //    LOGGER.debug("{}: SASL Client receiving last message", getRole());
         message = receiveSaslMessage();
         if (message.status != NegotiationStatus.COMPLETE) {
           throw new TTransportException(
@@ -293,7 +293,7 @@ abstract class TSaslTransport extends TTransport {
       }
     } catch (SaslException e) {
       try {
-        LOGGER.error("SASL negotiation failure", e);
+//        LOGGER.error("SASL negotiation failure", e);
         sendAndThrowMessage(NegotiationStatus.BAD, e.getMessage());
       } finally {
         underlyingTransport.close();
@@ -426,11 +426,11 @@ abstract class TSaslTransport extends TTransport {
       throw new TTransportException("Read a negative frame size (" + dataLength + ")!");
 
     byte[] buff = new byte[dataLength];
-    LOGGER.debug("{}: reading data length: {}", getRole(), dataLength);
+ //   LOGGER.debug("{}: reading data length: {}", getRole(), dataLength);
     underlyingTransport.readAll(buff, 0, dataLength);
     if (shouldWrap) {
       buff = sasl.unwrap(buff, 0, buff.length);
-      LOGGER.debug("data length after unwrap: {}", buff.length);
+ //     LOGGER.debug("data length after unwrap: {}", buff.length);
     }
     readBuffer.reset(buff);
   }
@@ -457,7 +457,7 @@ abstract class TSaslTransport extends TTransport {
     writeBuffer.reset();
 
     if (shouldWrap) {
-      LOGGER.debug("data length before wrap: {}", dataLength);
+   //   LOGGER.debug("data length before wrap: {}", dataLength);
       try {
         buf = sasl.wrap(buf, 0, dataLength);
       } catch (SaslException e) {
@@ -465,7 +465,7 @@ abstract class TSaslTransport extends TTransport {
       }
       dataLength = buf.length;
     }
-    LOGGER.debug("writing data length: {}", dataLength);
+ //   LOGGER.debug("writing data length: {}", dataLength);
     writeLength(dataLength);
     underlyingTransport.write(buf, 0, dataLength);
     underlyingTransport.flush();

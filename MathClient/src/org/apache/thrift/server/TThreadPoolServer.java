@@ -31,8 +31,8 @@ import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TServerTransport;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 
 /**
@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class TThreadPoolServer extends TServer {
-  private static final Logger LOGGER = LoggerFactory.getLogger(TThreadPoolServer.class.getName());
+  //private static final Logger LOGGER = LoggerFactory.getLogger(TThreadPoolServer.class.getName());
 
   public static class Args extends AbstractServerArgs<Args> {
     public int minWorkerThreads = 5;
@@ -106,7 +106,7 @@ public class TThreadPoolServer extends TServer {
     try {
       serverTransport_.listen();
     } catch (TTransportException ttx) {
-      LOGGER.error("Error occurred during listening.", ttx);
+  //    LOGGER.error("Error occurred during listening.", ttx);
       return;
     }
 
@@ -128,13 +128,13 @@ public class TThreadPoolServer extends TServer {
             executorService_.execute(wp);
             break;
           } catch(RejectedExecutionException ex) {
-            LOGGER.warn("ExecutorService rejected client " + (++rejections) +
-                " times(s)", ex);
+          //  LOGGER.warn("ExecutorService rejected client " + (++rejections) +
+          //      " times(s)", ex);
             try {
               TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
-              LOGGER.warn("Interrupted while waiting to place client on" +
-              		" executor queue.");
+          //    LOGGER.warn("Interrupted while waiting to place client on" +
+         //     		" executor queue.");
               Thread.currentThread().interrupt();
               break;
             }
@@ -143,7 +143,7 @@ public class TThreadPoolServer extends TServer {
       } catch (TTransportException ttx) {
         if (!stopped_) {
           ++failureCount;
-          LOGGER.warn("Transport error occurred during acceptance of message.", ttx);
+   //       LOGGER.warn("Transport error occurred during acceptance of message.", ttx);
         }
       }
     }
@@ -229,9 +229,9 @@ public class TThreadPoolServer extends TServer {
       } catch (TTransportException ttx) {
         // Assume the client died and continue silently
       } catch (TException tx) {
-        LOGGER.error("Thrift error occurred during processing of message.", tx);
+    //    LOGGER.error("Thrift error occurred during processing of message.", tx);
       } catch (Exception x) {
-        LOGGER.error("Error occurred during processing of message.", x);
+    //    LOGGER.error("Error occurred during processing of message.", x);
       }
 
       if (eventHandler != null) {

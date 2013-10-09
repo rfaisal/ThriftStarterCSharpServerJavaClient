@@ -6,12 +6,12 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-
+/*
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+*/
 import org.apache.thrift.TException;
 import org.apache.thrift.TProcessor;
 import org.apache.thrift.protocol.TProtocol;
@@ -22,7 +22,7 @@ import org.apache.thrift.transport.TTransport;
 /**
  * Servlet implementation class ThriftServer
  */
-public class TServlet extends HttpServlet {
+public class TServlet /*extends HttpServlet*/ {
 
   private final TProcessor processor;
 
@@ -55,7 +55,7 @@ public class TServlet extends HttpServlet {
    * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
    *      response)
    */
-  @Override
+ /* @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
@@ -86,16 +86,16 @@ public class TServlet extends HttpServlet {
       throw new ServletException(te);
     }
   }
-
+*/
   /**
    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
    *      response)
    */
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+  /*protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     doPost(request, response);
   }
-
+*/
   public void addCustomHeader(final String key, final String value) {
     this.customHeaders.add(new Map.Entry<String, String>() {
       public String getKey() {

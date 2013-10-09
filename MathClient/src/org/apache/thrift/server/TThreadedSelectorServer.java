@@ -40,8 +40,8 @@ import java.util.concurrent.TimeUnit;
 import org.apache.thrift.transport.TNonblockingServerTransport;
 import org.apache.thrift.transport.TNonblockingTransport;
 import org.apache.thrift.transport.TTransportException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * A Half-Sync/Half-Async server with a separate pool of threads to handle
@@ -58,7 +58,7 @@ import org.slf4j.LoggerFactory;
  * Like TNonblockingServer, it relies on the use of TFramedTransport.
  */
 public class TThreadedSelectorServer extends AbstractNonblockingServer {
-  private static final Logger LOGGER = LoggerFactory.getLogger(TThreadedSelectorServer.class.getName());
+  //private static final Logger LOGGER = LoggerFactory.getLogger(TThreadedSelectorServer.class.getName());
 
   public static class Args extends AbstractNonblockingServerArgs<Args> {
 
@@ -227,7 +227,7 @@ public class TThreadedSelectorServer extends AbstractNonblockingServer {
       acceptThread.start();
       return true;
     } catch (IOException e) {
-      LOGGER.error("Failed to start threads!", e);
+   //   LOGGER.error("Failed to start threads!", e);
       return false;
     }
   }
@@ -241,7 +241,7 @@ public class TThreadedSelectorServer extends AbstractNonblockingServer {
       joinThreads();
     } catch (InterruptedException e) {
       // Non-graceful shutdown occurred
-      LOGGER.error("Interrupted while joining threads!", e);
+   //   LOGGER.error("Interrupted while joining threads!", e);
     }
     gracefullyShutdownInvokerPool();
   }
@@ -310,7 +310,7 @@ public class TThreadedSelectorServer extends AbstractNonblockingServer {
         invoker.execute(invocation);
         return true;
       } catch (RejectedExecutionException rx) {
-        LOGGER.warn("ExecutorService rejected execution!", rx);
+   //     LOGGER.warn("ExecutorService rejected execution!", rx);
         return false;
       }
     } else {
@@ -379,7 +379,7 @@ public class TThreadedSelectorServer extends AbstractNonblockingServer {
           select();
         }
       } catch (Throwable t) {
-        LOGGER.error("run() exiting due to uncaught error", t);
+  //      LOGGER.error("run() exiting due to uncaught error", t);
       } finally {
         // This will wake up the selector threads
         TThreadedSelectorServer.this.stop();
@@ -416,11 +416,11 @@ public class TThreadedSelectorServer extends AbstractNonblockingServer {
           if (key.isAcceptable()) {
             handleAccept();
           } else {
-            LOGGER.warn("Unexpected state in select! " + key.interestOps());
+         //   LOGGER.warn("Unexpected state in select! " + key.interestOps());
           }
         }
       } catch (IOException e) {
-        LOGGER.warn("Got an IOException while selecting!", e);
+      //  LOGGER.warn("Got an IOException while selecting!", e);
       }
     }
 
@@ -444,7 +444,7 @@ public class TThreadedSelectorServer extends AbstractNonblockingServer {
               }
             });
           } catch (RejectedExecutionException rx) {
-            LOGGER.warn("ExecutorService rejected accept registration!", rx);
+         //   LOGGER.warn("ExecutorService rejected accept registration!", rx);
             // close immediately
             client.close();
           }
@@ -457,7 +457,7 @@ public class TThreadedSelectorServer extends AbstractNonblockingServer {
         return (TNonblockingTransport) serverTransport.accept();
       } catch (TTransportException tte) {
         // something went wrong accepting.
-        LOGGER.warn("Exception trying to accept!", tte);
+    //    LOGGER.warn("Exception trying to accept!", tte);
         return null;
       }
     }
@@ -523,7 +523,7 @@ public class TThreadedSelectorServer extends AbstractNonblockingServer {
       try {
         acceptedQueue.put(accepted);
       } catch (InterruptedException e) {
-        LOGGER.warn("Interrupted while adding accepted connection!", e);
+    //    LOGGER.warn("Interrupted while adding accepted connection!", e);
         return false;
       }
       selector.wakeup();
@@ -545,7 +545,7 @@ public class TThreadedSelectorServer extends AbstractNonblockingServer {
           cleanupSelectionKey(selectionKey);
         }
       } catch (Throwable t) {
-        LOGGER.error("run() exiting due to uncaught error", t);
+   //     LOGGER.error("run() exiting due to uncaught error", t);
       } finally {
         // This will wake up the accept thread and the other selector threads
         TThreadedSelectorServer.this.stop();
@@ -582,11 +582,11 @@ public class TThreadedSelectorServer extends AbstractNonblockingServer {
             // deal with writes
             handleWrite(key);
           } else {
-            LOGGER.warn("Unexpected state in select! " + key.interestOps());
+     //       LOGGER.warn("Unexpected state in select! " + key.interestOps());
           }
         }
       } catch (IOException e) {
-        LOGGER.warn("Got an IOException while selecting!", e);
+//        LOGGER.warn("Got an IOException while selecting!", e);
       }
     }
 
@@ -612,7 +612,7 @@ public class TThreadedSelectorServer extends AbstractNonblockingServer {
 
         clientKey.attach(frameBuffer);
       } catch (IOException e) {
-        LOGGER.warn("Failed to register accepted connection to selector!", e);
+  //      LOGGER.warn("Failed to register accepted connection to selector!", e);
         if (clientKey != null) {
           cleanupSelectionKey(clientKey);
         }

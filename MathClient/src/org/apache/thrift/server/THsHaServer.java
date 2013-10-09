@@ -157,7 +157,7 @@ public class THsHaServer extends TNonblockingServer {
       invoker.execute(invocation);
       return true;
     } catch (RejectedExecutionException rx) {
-      LOGGER.warn("ExecutorService rejected execution!", rx);
+  //    LOGGER.warn("ExecutorService rejected execution!", rx);
       return false;
     }
   }

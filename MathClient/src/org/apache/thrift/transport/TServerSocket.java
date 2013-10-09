@@ -19,8 +19,8 @@
 
 package org.apache.thrift.transport;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -34,7 +34,7 @@ import java.net.SocketException;
  */
 public class TServerSocket extends TServerTransport {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(TServerSocket.class.getName());
+ // private static final Logger LOGGER = LoggerFactory.getLogger(TServerSocket.class.getName());
 
   /**
    * Underlying ServerSocket object
@@ -100,7 +100,7 @@ public class TServerSocket extends TServerTransport {
       try {
         serverSocket_.setSoTimeout(0);
       } catch (SocketException sx) {
-        LOGGER.error("Could not set socket timeout.", sx);
+    //    LOGGER.error("Could not set socket timeout.", sx);
       }
     }
   }
@@ -124,7 +124,7 @@ public class TServerSocket extends TServerTransport {
       try {
         serverSocket_.close();
       } catch (IOException iox) {
-        LOGGER.warn("Could not close server socket.", iox);
+     //   LOGGER.warn("Could not close server socket.", iox);
       }
       serverSocket_ = null;
     }

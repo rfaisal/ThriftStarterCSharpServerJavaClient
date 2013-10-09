@@ -30,8 +30,8 @@ import javax.security.sasl.Sasl;
 import javax.security.sasl.SaslException;
 import javax.security.sasl.SaslServer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * Wraps another Thrift <code>TTransport</code>, but performs SASL server
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TSaslServerTransport extends TSaslTransport {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(TSaslServerTransport.class);
+  //private static final Logger LOGGER = LoggerFactory.getLogger(TSaslServerTransport.class);
 
   /**
    * Mapping from SASL mechanism name -> all the parameters required to
@@ -124,7 +124,7 @@ public class TSaslServerTransport extends TSaslTransport {
   protected void handleSaslStartMessage() throws TTransportException, SaslException {
     SaslResponse message = receiveSaslMessage();
 
-    LOGGER.debug("Received start message with status {}", message.status);
+  //  LOGGER.debug("Received start message with status {}", message.status);
     if (message.status != NegotiationStatus.START) {
       sendAndThrowMessage(NegotiationStatus.ERROR, "Expecting START status, received " + message.status);
     }
@@ -132,7 +132,7 @@ public class TSaslServerTransport extends TSaslTransport {
     // Get the mechanism name.
     String mechanismName = new String(message.payload);
     TSaslServerDefinition serverDefinition = serverDefinitionMap.get(mechanismName);
-    LOGGER.debug("Received mechanism name '{}'", mechanismName);
+  //  LOGGER.debug("Received mechanism name '{}'", mechanismName);
 
     if (serverDefinition == null) {
       sendAndThrowMessage(NegotiationStatus.BAD, "Unsupported mechanism type " + mechanismName);
@@ -210,18 +210,18 @@ public class TSaslServerTransport extends TSaslTransport {
     public TTransport getTransport(TTransport base) {
       WeakReference<TSaslServerTransport> ret = transportMap.get(base);
       if (ret == null || ret.get() == null) {
-        LOGGER.debug("transport map does not contain key", base);
+     //   LOGGER.debug("transport map does not contain key", base);
         ret = new WeakReference<TSaslServerTransport>(new TSaslServerTransport(serverDefinitionMap, base));
         try {
           ret.get().open();
         } catch (TTransportException e) {
-          LOGGER.debug("failed to open server transport", e);
+       //   LOGGER.debug("failed to open server transport", e);
           throw new RuntimeException(e);
         }
         transportMap.put(base, ret); // No need for putIfAbsent().
                                      // Concurrent calls to getTransport() will pass in different TTransports.
       } else {
-        LOGGER.debug("transport map does contain key {}", base);
+      //  LOGGER.debug("transport map does contain key {}", base);
       }
       return ret.get();
     }

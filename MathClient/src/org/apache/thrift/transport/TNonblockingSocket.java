@@ -30,15 +30,15 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * Transport for use with async client.
  */
 public class TNonblockingSocket extends TNonblockingTransport {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(TNonblockingSocket.class.getName());
+  //private static final Logger LOGGER = LoggerFactory.getLogger(TNonblockingSocket.class.getName());
 
   /**
    * Host and port if passed in, used for lazy non-blocking connect.
@@ -108,7 +108,7 @@ public class TNonblockingSocket extends TNonblockingTransport {
     try {
       socketChannel_.socket().setSoTimeout(timeout);
     } catch (SocketException sx) {
-      LOGGER.warn("Could not set socket timeout.", sx);
+    //  LOGGER.warn("Could not set socket timeout.", sx);
     }
   }
 
@@ -193,7 +193,7 @@ public class TNonblockingSocket extends TNonblockingTransport {
     try {
       socketChannel_.close();
     } catch (IOException iox) {
-      LOGGER.warn("Could not close socket.", iox);
+   //   LOGGER.warn("Could not close socket.", iox);
     }
   }
 

@@ -72,7 +72,7 @@ public class TNonblockingServer extends AbstractNonblockingServer {
       selectAcceptThread_.start();
       return true;
     } catch (IOException e) {
-      LOGGER.error("Failed to start selector thread!", e);
+//      LOGGER.error("Failed to start selector thread!", e);
       return false;
     }
   }
@@ -162,7 +162,7 @@ public class TNonblockingServer extends AbstractNonblockingServer {
           cleanupSelectionKey(selectionKey);
         }
       } catch (Throwable t) {
-        LOGGER.error("run() exiting due to uncaught error", t);
+  //      LOGGER.error("run() exiting due to uncaught error", t);
       } finally {
         stopped_ = true;
       }
@@ -204,11 +204,11 @@ public class TNonblockingServer extends AbstractNonblockingServer {
             // deal with writes
             handleWrite(key);
           } else {
-            LOGGER.warn("Unexpected state in select! " + key.interestOps());
+       //     LOGGER.warn("Unexpected state in select! " + key.interestOps());
           }
         }
       } catch (IOException e) {
-        LOGGER.warn("Got an IOException while selecting!", e);
+     //   LOGGER.warn("Got an IOException while selecting!", e);
       }
     }
 
@@ -231,7 +231,7 @@ public class TNonblockingServer extends AbstractNonblockingServer {
           clientKey.attach(frameBuffer);
       } catch (TTransportException tte) {
         // something went wrong accepting.
-        LOGGER.warn("Exception trying to accept!", tte);
+   //     LOGGER.warn("Exception trying to accept!", tte);
         tte.printStackTrace();
         if (clientKey != null) cleanupSelectionKey(clientKey);
         if (client != null) client.close();

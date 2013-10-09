@@ -26,8 +26,8 @@ import javax.security.sasl.Sasl;
 import javax.security.sasl.SaslClient;
 import javax.security.sasl.SaslException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * Wraps another Thrift <code>TTransport</code>, but performs SASL client
@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TSaslClientTransport extends TSaslTransport {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(TSaslClientTransport.class);
+ // private static final Logger LOGGER = LoggerFactory.getLogger(TSaslClientTransport.class);
 
   /**
    * The name of the mechanism this client supports.
@@ -93,8 +93,8 @@ public class TSaslClientTransport extends TSaslTransport {
     if (saslClient.hasInitialResponse())
       initialResponse = saslClient.evaluateChallenge(initialResponse);
 
-    LOGGER.debug("Sending mechanism name {} and initial response of length {}", mechanism,
-        initialResponse.length);
+   // LOGGER.debug("Sending mechanism name {} and initial response of length {}", mechanism,
+   //     initialResponse.length);
 
     byte[] mechanismBytes = mechanism.getBytes();
     sendSaslMessage(NegotiationStatus.START,
